@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "561651636588",
+    "firebase_url": "https://barbershop-reslab-tech.firebaseio.com",
+    "project_id": "barbershop-reslab-tech",
+    "storage_bucket": "barbershop-reslab-tech.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:561651636588:android:0e59ae71e6c2f12a88bb49",
+        "android_client_info": {
+          "package_name": "reslab.tech.barbershop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "561651636588-q77j6requfjjoho5e7i6btt3bko18ao4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAxgEeMSYwzVy8i20b910QXguI4w6fYqvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "561651636588-q77j6requfjjoho5e7i6btt3bko18ao4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
