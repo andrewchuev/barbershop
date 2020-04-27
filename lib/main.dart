@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:barbershop/screens/authorization.dart';
 
 void main() => runApp(Barbershop());
 
@@ -8,31 +9,12 @@ class Barbershop extends StatelessWidget {
     return MaterialApp(
       title: 'Barbershop',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Color.fromRGBO(30, 120, 120, 1),
+        textTheme: TextTheme(title: TextStyle(color: Colors.white)),
       ),
-      home: MyHomePage(title: 'Barbershop'),
+      home: AuthorizationPage(title: 'Barbershop'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Text('Barbershop'),
-      ),
-    );
-  }
-}
