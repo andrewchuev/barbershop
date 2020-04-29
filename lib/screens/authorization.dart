@@ -1,9 +1,11 @@
+import 'package:barbershop/services/auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:barbershop/domain/user.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthorizationPage extends StatefulWidget {
-  AuthorizationPage({Key key, this.title}) : super(key: key);
-  final String title;
+  AuthorizationPage({Key key}) : super(key: key);
 
   @override
   _AuthorizationPageState createState() => _AuthorizationPageState();
@@ -17,11 +19,13 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
   String _password;
   bool showLogin = true;
 
+  AuthService _authService = AuthService();
+
   @override
   Widget build(BuildContext context) {
     Widget _logo() {
       return Padding(
-        padding: EdgeInsets.only(top: 100),
+        padding: EdgeInsets.only(top: 70, bottom: 40),
         child: Container(
           child: Align(
             child: Text(
@@ -100,14 +104,56 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       );
     }
 
-    void _buttonAction() {
+    Future<void> _loginButtonAction() async {
       print('button action');
 
       _email = _emailController.text;
       _password = _passwordController.text;
 
-      _emailController.clear();
-      _passwordController.clear();
+      if (_email.isEmpty || _password.isEmpty) return;
+
+      User user = await _authService.signInWithEmailAndPassword(_email.trim(), _password.trim());
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can't SignIn you! Please check your email/password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
+
+
+    }
+
+    Future<void> _registerButtonAction() async {
+      print('button action');
+
+      _email = _emailController.text;
+      _password = _passwordController.text;
+
+      if (_email.isEmpty || _password.isEmpty) return;
+
+      User user = await _authService.registerWithEmailAndPassword(_email.trim(), _password.trim());
+      if (user == null) {
+        Fluttertoast.showToast(
+            msg: "Can't Register you! Please check your email/password",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
+        _emailController.clear();
+        _passwordController.clear();
+      }
+
+
     }
 
     return Scaffold(
@@ -115,7 +161,46 @@ class _AuthorizationPageState extends State<AuthorizationPage> {
       body: Column(
         children: <Widget>[
           _logo(),
-          _form('LOGIN', _buttonAction),
+          showLogin
+              ? Column(
+                  children: <Widget>[
+                    _form('LOGIN', _loginButtonAction),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: GestureDetector(
+                        child: Text('Not registred yet? Register!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                        onTap: () {
+                          setState(() {
+                            showLogin = false;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                )
+              : Column(
+                  children: <Widget>[
+                    _form('REGISTER', _registerButtonAction),
+                    Padding(
+                      padding: EdgeInsets.all(10),
+                      child: GestureDetector(
+                        child: Text('Already registered? Login!', style: TextStyle(fontSize: 20, color: Colors.white)),
+                        onTap: () {
+                          setState(() {
+                            showLogin = true;
+                          });
+                        },
+                      ),
+                    )
+                  ],
+                ),
+          Padding(
+            padding: EdgeInsets.only(top: 20, bottom: 20),
+            child: Image.asset(
+              'assets/images/big-logo.png',
+              height: 180,
+            ),
+          )
         ],
       ),
     );
